@@ -15,6 +15,7 @@ helpDict = {
 'goog' : 'usage: "!goog [search string]". <BOTNAME> will search google for [search string].', 
 'help' : 'usage: "!help", also "!h" and "!man". Returns this menu.', 
 'highfive' : 'usage: "!highfive". <BOTNAME> high-fives you',
+'hipster' : 'usage: "!hipster". <BOTNAME> returns some shitty indie music Jake likes.',
 'kick' : 'usage: "!kick [nick]". If <BOTNAME> has ops, it will kick [nick] from the channel.', 
 'kill' : 'usage: "!kill". <BOTNAME> will "die"', 
 'kjv' : 'usage: "!kjv [verse]". <BOTNAME> recite the given verse from the king james version of the bible. Must be in the form of gen 1:1-5, 1kings3:3, Judges 12:11 etc.', 
@@ -210,7 +211,14 @@ def help(bot, user, target, argument):
 def highfive(bot, user, target, argument):
 	bot.sendLns(target, 'ACTION high fives '+user+'.')
 	return
-	
+
+def hipster(bot, user, target, argument):
+	hipfile = urllib2.urlopen('http://terras.rotahall.org/hipster.txt')
+	artistlist = hipfile.readlines()
+	artist = artistlist[random.randint(0,len(artistlist)-1)].strip('\n')
+	bot.sendLns(target, artist)
+	return
+
 def kick(bot, user, target, argument):
 	bot.sendRaw('KICK '+bot.config['channel']+' '+argument+'\r\n')
 	return
