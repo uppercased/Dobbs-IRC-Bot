@@ -307,7 +307,7 @@ class ircBot(threading.Thread):
 		logTime = time.strftime('%d %B %Y %H:%M:%S')
 		ircLog=open(self.config['logFile'], 'a')
 		line = logTime+'\t'+data+'\n'
-		ircLog.write(line.encode('utf-8'))
+		ircLog.write(line)
 
 
 	def __init__(self, configFile):

@@ -70,7 +70,7 @@ class SocketHandler(threading.Thread):
 				if r2w:
 					if self._sendBuffer.has_key(name):
 						line = self._sendBuffer[name]
-						line = line.encode('utf-8')
+#						line = line.encode('utf-8')
 						sock.send(line)
 						del self._sendBuffer[name]
 				else:
@@ -91,7 +91,7 @@ class SocketHandler(threading.Thread):
 				if r2w:
 					if self._sendBuffer.has_key(name):
 						line = self._sendBuffer[name]
-						line = line.encode('utf-8')
+#						line = line.encode('utf-8')
 						sock.send(line)
 						del self._sendBuffer[name]
 				if r2r:

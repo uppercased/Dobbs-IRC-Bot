@@ -159,14 +159,23 @@ def action(bot, user, target, argument):
 	return
 
 def d(bot, user, target, argument):
-	size=int(argument)
+	try:
+		size=int(argument)
+		if size < 2 or size > 1000000000: raise
+	except:
+		bot.sendLns(user, 'invalid number, must be a value between 2-1000000000.')
+		return
 	try:
 		number = urllib.urlopen('http://www.random.org/integers/?num=1&min=1&max='+str(size)+'&col=5&base=10&format=plain&rnd=new').read()
 		number=re.findall('(\d+)', number)[0]
 		print 'from site'
 	except:
 		number = str(random.randint(1,size))
-	action(bot, '', '', 'rolls the dice: '+number)
+	if target == user:
+		bot.sendLns(target, '*rolls the dice* -- '+number)
+	else:
+		action(bot, '', '', 'rolls the dice: '+number)
+
 	return
 
 def dance(bot, user, target, argument):
