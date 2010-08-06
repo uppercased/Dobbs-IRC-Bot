@@ -7,6 +7,7 @@ helpDict = {
 '8ball' : 'usage: "!8ball". <BOTNAME> checks the magic 8ball.', 
 'about' : 'usage: "!about". <BOTNAME> returns information about itself.', 
 'action' : 'usage: "!action [action]". <BOTNAME> will do [action] (Only allowed users can do this).', 
+'c2f' : 'usage: "!c2f [temperature]. <BOTNAME> will convert [temperature] from communist to freedom-units.', 
 'dance' : 'usage: "!dance". Makes <BOTNAME> dance.', 
 'd' : 'usage: !d [number]. Dobbs rolls a die with [number] sides.',
 'die' : 'usage: "!die". The big red button: kills the bot.', 
@@ -123,6 +124,15 @@ def _getWeather(place, u, appId): # dict[weather], [dict[forecast]], "errors"
 	else:
 		return 0, 0, 'Bad location.'
 
+def _random(low, high):
+	try:
+		randNum = urllib.urlopen('http://www.random.org/integers/?num=1&min='+str(low)+'&max='+str(high)+'&col=5&base=10&format=plain&rnd=new').read()
+		randNum=int(re.findall('(\d+)', randNum)[0])
+		print 'from site'
+	except:
+		randNum = random.randint(low, high)
+
+	return randNum
 
 
 def idle(bot, data):
@@ -146,7 +156,7 @@ def idle(bot, data):
 #	return
 
 def eightBall(bot, user, target, argument):
-	bot.sendLns(target, _eightballResponses[random.randint(0,19)])
+	bot.sendLns(target, _eightballResponses[_random(0,19)])
 	return
 
 def about(bot, user, target, argument):
@@ -158,6 +168,14 @@ def action(bot, user, target, argument):
 	bot.sendLns(bot.config['channel'], 'ACTION '+argument+'')
 	return
 
+def c2f(bot, user, target, argument):
+	try:
+		tc=int(argument)
+	except:
+		bot.sendLns(user, 'invalid number.')
+		return
+	bot.sendLns(target, str((9/5)*tc+32)+' degrees F.')
+
 def d(bot, user, target, argument):
 	try:
 		size=int(argument)
@@ -165,12 +183,7 @@ def d(bot, user, target, argument):
 	except:
 		bot.sendLns(user, 'invalid number, must be a value between 2-1000000000.')
 		return
-	try:
-		number = urllib.urlopen('http://www.random.org/integers/?num=1&min=1&max='+str(size)+'&col=5&base=10&format=plain&rnd=new').read()
-		number=re.findall('(\d+)', number)[0]
-		print 'from site'
-	except:
-		number = str(random.randint(1,size))
+	number = str(_random(1,size))	
 	if target == user:
 		bot.sendLns(target, '*rolls the dice* -- '+number)
 	else:
@@ -224,7 +237,7 @@ def highfive(bot, user, target, argument):
 def hipster(bot, user, target, argument):
 	hipfile = urllib2.urlopen('http://terras.rotahall.org/hipster.txt')
 	artistlist = hipfile.readlines()
-	artist = artistlist[random.randint(0,len(artistlist)-1)].strip('\n')
+	artist = artistlist[_random(0,len(artistlist)-1)].strip('\n')
 	bot.sendLns(target, artist)
 	return
 
@@ -262,7 +275,7 @@ def kjv(bot, user, target, argument):
 	return
 
 def mo(bot, user, target, argument):
-	bot.sendLns(target, mohammeds[random.randint(0,len(mohammeds)-1)])
+	bot.sendLns(target, mohammeds[_random(0,len(mohammeds)-1)])
 	return
 
 def nick(bot, user, target, argument):
