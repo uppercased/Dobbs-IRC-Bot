@@ -52,11 +52,11 @@ class ircBot(threading.Thread):
 		# if we're given a list of lines to send, put them in the proper format
 		if type(lines) is list:
 			for i in range(0, len(lines)-1):
-				lines[i]=unicode(lines[i])+u'\r\n'
+				lines[i]=lines[i]+'\r\n'
 			lines = ''.join(lines)
 		# otherwise, assume we're given a single line: format it
 		else:
-			lines = unicode(str(lines))+u'\r\n'
+			lines = str(lines)+'\r\n'
 		self._sendQueue.put(( 'SEND', self._id, lines ))
 		return
 
