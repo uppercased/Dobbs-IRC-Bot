@@ -1,0 +1,10 @@
+What needs work:
+Unicode support for the whole bot needs to be incorporated.
+socketHandler.py crashes when connection breaks unexpectedly. 
+Code for connecting to server, joining a channel, and /nick, ghosting, etc need cleaning up
+A little better error handling for command functions (errors should be dealt with in ircBot.py)
+
+
+Things that need to be done down the road.
+Allow for bot to be on multiple channels -- each with their own configuration.
+Allow for multiple servers.
